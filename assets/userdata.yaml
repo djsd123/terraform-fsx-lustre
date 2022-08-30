@@ -1,0 +1,40 @@
+#cloud-config
+repo_update: true
+repo_upgrade: all
+
+runcmd:
+
+  # update
+  - echo "Starting CloudInit userdata"
+  - yum update -y
+
+  # install tools
+  - amazon-linux-extras install -y epel lustre2.10
+  - yum groupinstall -y "Development Tools"
+  - yum install -y parallel ioping tree nload git libaio-devel openmpi openmpi-devel
+
+  # install fio IO Benchmarking tool
+  - git clone git://git.kernel.dk/fio.git
+  - cd fio
+  - ./configure
+  - make
+  - make install
+  - cd
+
+  # install ior IO Benchmarking tool
+  - git clone https://github.com/hpc/ior.git
+  - export PATH=$PATH:/usr/lib64/openmpi/bin
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib/
+  - cd ior
+  - ./bootstrap
+  - ./configure
+  - make
+  - sudo cp src/ior /usr/local/bin
+  - cd
+
+  # mount fsx lustre
+  - mkdir -p /mnt/fsx
+  - echo "${FileSystemId}.fsx.${Region}.amazonaws.com@tcp:/fsx /mnt/fsx lustre defaults,_netdev 0 0" >> /etc/fstab
+  - mount -a
+  - chown ec2-user:ec2-user /mnt/fsx
+  - reboot
