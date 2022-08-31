@@ -18,6 +18,11 @@ Sets up an EC2 instance and mounts an [FSx] Lustre filesystem backed by a NASA p
 | [hashicorp/cloudinit] | ~> 2.x  |
 
 
+## Architecture
+
+![diagram](assets/fsx-lustre-workshop-environment-architecture.png)
+
+
 ## Usage
 
 **note**
