@@ -36,5 +36,5 @@ data "aws_iam_policy_document" "ec2_assume_role_policy" {
 }
 
 data "aws_iam_policy" "ec2_policy_for_ssm" {
-  name = "AmazonEC2RoleforSSM"
+  name = "AmazonSSMManagedInstanceCore"
 }

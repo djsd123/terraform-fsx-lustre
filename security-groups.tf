@@ -48,6 +48,13 @@ resource "aws_security_group" "file_system_sec_grp" {
     self      = true
   }
 
+  egress {
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = {
     Name = "${var.name}-file-system-sec-grp"
   }

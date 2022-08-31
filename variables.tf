@@ -6,12 +6,13 @@ variable "name" {
 }
 
 variable "region" {
-  type = string
+  type        = string
+  description = "The region to deploy the resources"
 }
 
 variable "fsx_s3_import_path" {
   type        = string
-  description = "The s3 bucket to use to back your fsx filesystem. Defaults to NASA's nex open data bucket"
+  description = "The s3 bucket to use to back your fsx filesystem. Defaults to NASA's Nex open data bucket"
 
   default = "s3://nasanex"
 }
@@ -32,7 +33,7 @@ variable "enable_low_storage_capacity_alarm" {
   type        = bool
   description = "Whether to enable the 'Low free storage capacity alarm'?"
 
-  default = false
+  default = true
 }
 
 variable "low_free_data_storage_capacity_threshold" {
@@ -52,4 +53,9 @@ variable "instance_type" {
   description = "The instance type to use for the fsx instance"
 
   default = "c5.4xlarge"
+}
+
+variable "ec2_key_pair" {
+  type        = string
+  description = "The EC2 key pair to use for ssh connections"
 }
