@@ -1,7 +1,6 @@
 resource "aws_cloudwatch_dashboard" "fsx_filesystem_dashboard" {
   dashboard_name = join("-", [var.name, var.region])
   dashboard_body = templatefile("${path.module}/assets/fsx-dashboard.tftpl", {
-    accountId    = data.aws_caller_identity.current.account_id,
     alarmArn     = aws_cloudwatch_metric_alarm.fsx_storage_capacity_alarm.arn
     fileSystemId = aws_fsx_lustre_file_system.fsx_filesystem.id,
     name         = var.name

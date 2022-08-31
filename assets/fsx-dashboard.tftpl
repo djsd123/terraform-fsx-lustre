@@ -1,374 +1,167 @@
 {
-  "widgets": [
-    {
-      "type": "text",
-      "x": 15,
-      "y": 0,
-      "width": 9,
-      "height": 6,
-      "properties": {
-        "markdown": "\n# Amazon FSx file system: ${fileSystemId}\n## Region: ${region}\n\nDashboard: [${name}-${region}](#dashboards:name=${name}-${region})\n\n![FSx_logo](https://s3.amazonaws.com/amazon-fsx/workshop/lustre/resources/images/fsx-for-lustre-icon.png)\n"
-      }
-    },
-    {
-      "type": "metric",
-      "x": 0,
-      "y": 6,
-      "width": 15,
-      "height": 9,
-      "properties": {
-        "metrics": [
-          [
-            {
-              "expression": "totaldatabytes/PERIOD(datareadbytes)",
-              "label": "Total Data Throughput (B/s)",
-              "id": "totaldatathroughput",
-              "yAxis": "left",
-              "color": "#2ca02c"
+    "widgets": [
+        {
+            "height": 6,
+            "width": 9,
+            "y": 0,
+            "x": 15,
+            "type": "text",
+            "properties": {
+                "markdown": "\n# Amazon FSx file system: ${fileSystemId}\n## Region: ${region}\n\nDashboard: [${region}_${fileSystemId}](#dashboards:name=${region}_${fileSystemId})\n\n![FSx_logo](https://s3.amazonaws.com/amazon-fsx/workshop/lustre/resources/images/fsx-for-lustre-icon.png)\n"
             }
-          ],
-          [
-            {
-              "expression": "datawritebytes/PERIOD(datawritebytes)",
-              "label": "Data Write Throughput (B/s)",
-              "id": "datawritethroughput",
-              "yAxis": "left",
-              "color": "#1f77b4"
-            }
-          ],
-          [
-            {
-              "expression": "datareadbytes/PERIOD(datareadbytes)",
-              "label": "Data Read Throughput (B/s)",
-              "id": "datareadthroughput",
-              "yAxis": "left",
-              "color": "#ff7f0e"
-            }
-          ],
-          [
-            {
-              "expression": "datareadbytes+datawritebytes",
-              "label": "TotalDataBytes",
-              "id": "totaldatabytes",
-              "visible": false
-            }
-          ],
-          [
-            "AWS/FSx",
-            "DataWriteBytes",
-            "FileSystemId",
-            "'${fileSystemId}'",
-            {
-              "stat": "Sum",
-              "id": "datawritebytes",
-              "yAxis": "right",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "DataReadBytes",
-            ".",
-            ".",
-            {
-              "stat": "Sum",
-              "id": "datareadbytes",
-              "yAxis": "right",
-              "visible": false
-            }
-          ]
-        ],
-        "view": "timeSeries",
-        "stacked": false,
-        "region": "'${region}'",
-        "period": 60,
-        "title": "Throughput (Bytes per second)",
-        "legend": {
-          "position": "right"
         },
-        "yAxis": {
-          "left": {
-            "showUnits": true
-          },
-          "right": {
-            "showUnits": false
-          }
+        {
+            "height": 9,
+            "width": 15,
+            "y": 6,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "totaldatabytes/PERIOD(datareadbytes)", "label": "Total Data Throughput (B/s)", "id": "totaldatathroughput", "yAxis": "left", "color": "#2ca02c" } ],
+                    [ { "expression": "datawritebytes/PERIOD(datawritebytes)", "label": "Data Write Throughput (B/s)", "id": "datawritethroughput", "yAxis": "left", "color": "#1f77b4" } ],
+                    [ { "expression": "datareadbytes/PERIOD(datareadbytes)", "label": "Data Read Throughput (B/s)", "id": "datareadthroughput", "yAxis": "left", "color": "#ff7f0e" } ],
+                    [ { "expression": "datareadbytes+datawritebytes", "label": "TotalDataBytes", "id": "totaldatabytes", "visible": false } ],
+                    [ "AWS/FSx", "DataWriteBytes", "FileSystemId", "${fileSystemId}", { "stat": "Sum", "id": "datawritebytes", "yAxis": "right", "visible": false } ],
+                    [ ".", "DataReadBytes", ".", ".", { "stat": "Sum", "id": "datareadbytes", "yAxis": "right", "visible": false } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${region}",
+                "period": 60,
+                "title": "Throughput (Bytes per second)",
+                "legend": {
+                    "position": "right"
+                },
+                "yAxis": {
+                    "left": {
+                        "showUnits": true
+                    },
+                    "right": {
+                        "showUnits": false
+                    }
+                },
+                "stat": "Average"
+            }
         },
-        "stat": "Average"
-      }
-    },
-    {
-      "type": "metric",
-      "x": 15,
-      "y": 6,
-      "width": 9,
-      "height": 9,
-      "properties": {
-        "metrics": [
-          [
-            {
-              "expression": "datawritebytes*100/(datawritebytes+datareadbytes)",
-              "label": "Data Write (%)__",
-              "id": "datawritepercent",
-              "stat": "Sum",
-              "color": "#1f77b4"
+        {
+            "height": 9,
+            "width": 9,
+            "y": 6,
+            "x": 15,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "datawritebytes*100/(datawritebytes+datareadbytes)", "label": "Data Write (%)__", "id": "datawritepercent", "stat": "Sum", "color": "#1f77b4" } ],
+                    [ { "expression": "datareadbytes*100/(datawritebytes+datareadbytes)", "label": "Data Read (%)__", "id": "datareadpercent", "stat": "Sum", "color": "#ff7f0e" } ],
+                    [ "AWS/FSx", "DataWriteBytes", "FileSystemId", "${fileSystemId}", { "id": "datawritebytes", "visible": false } ],
+                    [ ".", "DataReadBytes", ".", ".", { "id": "datareadbytes", "visible": false } ]
+                ],
+                "view": "timeSeries",
+                "region": "${region}",
+                "stacked": false,
+                "title": "Percent Throughput (%)",
+                "period": 60,
+                "legend": {
+                    "position": "right"
+                },
+                "stat": "Sum",
+                "yAxis": {
+                    "left": {
+                        "showUnits": false
+                    },
+                    "right": {
+                        "showUnits": false
+                    }
+                }
             }
-          ],
-          [
-            {
-              "expression": "datareadbytes*100/(datawritebytes+datareadbytes)",
-              "label": "Data Read (%)__",
-              "id": "datareadpercent",
-              "stat": "Sum",
-              "color": "#ff7f0e"
-            }
-          ],
-          [
-            "AWS/FSx",
-            "DataWriteBytes",
-            "FileSystemId",
-            "'${fileSystemId}'",
-            {
-              "id": "datawritebytes",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "DataReadBytes",
-            ".",
-            ".",
-            {
-              "id": "datareadbytes",
-              "visible": false
-            }
-          ]
-        ],
-        "view": "timeSeries",
-        "region": "'${region}'",
-        "stacked": false,
-        "title": "Percent Throughput (%)",
-        "period": 60,
-        "legend": {
-          "position": "right"
         },
-        "stat": "Sum",
-        "yAxis": {
-          "left": {
-            "showUnits": false
-          },
-          "right": {
-            "showUnits": false
-          }
+        {
+            "height": 9,
+            "width": 15,
+            "y": 15,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "(datawriteoperations+datareadoperations+metadataoperations)/PERIOD(metadataoperations)", "label": "Total Operations per second", "id": "totalops", "yAxis": "left", "color": "#2ca02c" } ],
+                    [ { "expression": "(datawriteoperations)/PERIOD(datawriteoperations)", "label": "Data Write Operations per second", "id": "datawriteops", "yAxis": "left", "color": "#1f77b4" } ],
+                    [ { "expression": "(datareadoperations)/PERIOD(datareadoperations)", "label": "Data Read Operations per second", "id": "datareadops", "yAxis": "left", "color": "#ff7f0e" } ],
+                    [ { "expression": "(metadataoperations)/PERIOD(metadataoperations)", "label": "Metadata Operations per second", "id": "metadataops", "yAxis": "left", "color": "#d62728" } ],
+                    [ "AWS/FSx", "DataWriteOperations", "FileSystemId", "${fileSystemId}", { "stat": "Sum", "id": "datawriteoperations", "visible": false } ],
+                    [ ".", "DataReadOperations", ".", ".", { "stat": "Sum", "id": "datareadoperations", "visible": false } ],
+                    [ ".", "MetadataOperations", ".", ".", { "stat": "Sum", "id": "metadataoperations", "visible": false } ]
+                ],
+                "view": "timeSeries",
+                "stacked": false,
+                "region": "${region}",
+                "period": 60,
+                "title": "Operations per Second",
+                "legend": {
+                    "position": "right"
+                },
+                "yAxis": {
+                    "left": {
+                        "showUnits": false
+                    },
+                    "right": {
+                        "showUnits": false
+                    }
+                },
+                "stat": "Average"
+            }
+        },
+        {
+            "height": 9,
+            "width": 9,
+            "y": 15,
+            "x": 15,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "datawriteoperations*100/totaloperations", "label": "Data Write (%)__", "id": "percentdatawriteoperations", "color": "#1f77b4" } ],
+                    [ { "expression": "datareadoperations*100/totaloperations", "label": "Data Read (%)__", "id": "percentdatareadoperations", "color": "#ff7f0e" } ],
+                    [ { "expression": "metadataoperations*100/totaloperations", "label": "Metadata (%)__", "id": "percentmetadataoperations", "color": "#d62728" } ],
+                    [ { "expression": "datawriteoperations+datareadoperations+metadataoperations", "label": "TotalOperations", "id": "totaloperations", "visible": false } ],
+                    [ "AWS/FSx", "DataWriteOperations", "FileSystemId", "${fileSystemId}", { "stat": "Sum", "id": "datawriteoperations", "visible": false } ],
+                    [ ".", "DataReadOperations", ".", ".", { "stat": "Sum", "id": "datareadoperations", "visible": false } ],
+                    [ ".", "MetadataOperations", ".", ".", { "stat": "Sum", "id": "metadataoperations", "visible": false } ]
+                ],
+                "view": "timeSeries",
+                "region": "${region}",
+                "stacked": false,
+                "title": "Percent Operations per Second (%)",
+                "period": 60,
+                "legend": {
+                    "position": "right"
+                },
+                "stat": "Average",
+                "yAxis": {
+                    "left": {
+                        "showUnits": false
+                    },
+                    "right": {
+                        "showUnits": false
+                    }
+                }
+            }
+        },
+        {
+            "height": 6,
+            "width": 15,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "title": "Free Data Storage Capacity (Bytes)",
+                "annotations": {
+                    "alarms": [
+                        "${alarmArn}"
+                    ]
+                },
+                "view": "timeSeries",
+                "stacked": false
+            }
         }
-      }
-    },
-    {
-      "type": "metric",
-      "x": 0,
-      "y": 15,
-      "width": 15,
-      "height": 9,
-      "properties": {
-        "metrics": [
-          [
-            {
-              "expression": "(datawriteoperations+datareadoperations+metadataoperations)/PERIOD(metadataoperations)",
-              "label": "Total Operations per second",
-              "id": "totalops",
-              "yAxis": "left",
-              "color": "#2ca02c"
-            }
-          ],
-          [
-            {
-              "expression": "(datawriteoperations)/PERIOD(datawriteoperations)",
-              "label": "Data Write Operations per second",
-              "id": "datawriteops",
-              "yAxis": "left",
-              "color": "#1f77b4"
-            }
-          ],
-          [
-            {
-              "expression": "(datareadoperations)/PERIOD(datareadoperations)",
-              "label": "Data Read Operations per second",
-              "id": "datareadops",
-              "yAxis": "left",
-              "color": "#ff7f0e"
-            }
-          ],
-          [
-            {
-              "expression": "(metadataoperations)/PERIOD(metadataoperations)",
-              "label": "Metadata Operations per second",
-              "id": "metadataops",
-              "yAxis": "left",
-              "color": "#d62728"
-            }
-          ],
-          [
-            "AWS/FSx",
-            "DataWriteOperations",
-            "FileSystemId",
-            "'${fileSystemId}'",
-            {
-              "stat": "Sum",
-              "id": "datawriteoperations",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "DataReadOperations",
-            ".",
-            ".",
-            {
-              "stat": "Sum",
-              "id": "datareadoperations",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "MetadataOperations",
-            ".",
-            ".",
-            {
-              "stat": "Sum",
-              "id": "metadataoperations",
-              "visible": false
-            }
-          ]
-        ],
-        "view": "timeSeries",
-        "stacked": false,
-        "region": "'${region}'",
-        "period": 60,
-        "title": "Operations per Second",
-        "legend": {
-          "position": "right"
-        },
-        "yAxis": {
-          "left": {
-            "showUnits": false
-          },
-          "right": {
-            "showUnits": false
-          }
-        },
-        "stat": "Average"
-      }
-    },
-    {
-      "type": "metric",
-      "x": 15,
-      "y": 15,
-      "width": 9,
-      "height": 9,
-      "properties": {
-        "metrics": [
-          [
-            {
-              "expression": "datawriteoperations*100/totaloperations",
-              "label": "Data Write (%)__",
-              "id": "percentdatawriteoperations",
-              "color": "#1f77b4"
-            }
-          ],
-          [
-            {
-              "expression": "datareadoperations*100/totaloperations",
-              "label": "Data Read (%)__",
-              "id": "percentdatareadoperations",
-              "color": "#ff7f0e"
-            }
-          ],
-          [
-            {
-              "expression": "metadataoperations*100/totaloperations",
-              "label": "Metadata (%)__",
-              "id": "percentmetadataoperations",
-              "color": "#d62728"
-            }
-          ],
-          [
-            {
-              "expression": "datawriteoperations+datareadoperations+metadataoperations",
-              "label": "TotalOperations",
-              "id": "totaloperations",
-              "visible": false
-            }
-          ],
-          [
-            "AWS/FSx",
-            "DataWriteOperations",
-            "FileSystemId",
-            "'${fileSystemId}'",
-            {
-              "stat": "Sum",
-              "id": "datawriteoperations",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "DataReadOperations",
-            ".",
-            ".",
-            {
-              "stat": "Sum",
-              "id": "datareadoperations",
-              "visible": false
-            }
-          ],
-          [
-            ".",
-            "MetadataOperations",
-            ".",
-            ".",
-            {
-              "stat": "Sum",
-              "id": "metadataoperations",
-              "visible": false
-            }
-          ]
-        ],
-        "view": "timeSeries",
-        "region": "'${region}'",
-        "stacked": false,
-        "title": "Percent Operations per Second (%)",
-        "period": 60,
-        "legend": {
-          "position": "right"
-        },
-        "stat": "Average",
-        "yAxis": {
-          "left": {
-            "showUnits": false
-          },
-          "right": {
-            "showUnits": false
-          }
-        }
-      }
-    },
-    {
-      "type": "metric",
-      "x": 0,
-      "y": 0,
-      "width": 15,
-      "height": 6,
-      "properties": {
-        "title": "Free Data Storage Capacity (Bytes)",
-        "annotations": {
-          "alarms": [
-            "${alarmArn}"
-          ]
-        },
-        "view": "timeSeries",
-        "stacked": false
-      }
-    }
-  ]
+    ]
 }
