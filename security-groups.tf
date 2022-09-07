@@ -70,7 +70,7 @@ resource "aws_security_group" "ssm_endpoints" {
   }
 }
 
-resource "aws_security_group_rule" "ssm_endpoint_ingress_ttps" {
+resource "aws_security_group_rule" "ssm_endpoint_ingress_https" {
   from_port         = 443
   protocol          = "tcp"
   security_group_id = aws_security_group.ssm_endpoints.id
