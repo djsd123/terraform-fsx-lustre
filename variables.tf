@@ -19,7 +19,7 @@ variable "fsx_s3_import_path" {
 
 variable "fsx_storage_capacity" {
   type        = number
-  description = "Storage capacity of file system in increments of 3600 GiBs"
+  description = "Storage capacity of file system in increments of 3600 GiBs due to default deployment type 'SCRATCH_1'"
 
   default = 7200
 }

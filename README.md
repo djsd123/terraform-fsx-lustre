@@ -51,7 +51,7 @@ terraform apply -var-file=vars/<VARS FILE>.tfvars
 | name                                     | Common name for all resources.                                                             | `string` | `fsx-example`   |    no    |
 | region                                   | The region to deploy the resources.                                                        | `string` | `""`            |   yes    |
 | fsx_s3_import_path                       | The s3 bucket to use to back your fsx filesystem. Defaults to NASA's Nex open data bucket. | `string` | `s3://nasanex`  |    no    |
-| fsx_storage_capacity                     | Storage capacity of file system in increments of 3600 GiBs.                                | `number` | `7200`          |    no    |
+| fsx_storage_capacity                     | Storage capacity of file system in increments of 3600 GiBs due to default deployment type 'SCRATCH_1'.                               | `number` | `7200`          |    no    |
 | alarm_notification_email_address         | The email address to send FSX storage alarms/alerts to.                                    | `string` | `""`            |   yes    |
 | enable_low_storage_capacity_alarm        | Whether to enable the 'Low free storage capacity alarm'?                                   | `bool`   | `true`          |    no    |
 | low_free_data_storage_capacity_threshold | Low free data storage capacity threshold (Bytes).                                          | `string` | `7100000000000` |    no    |
